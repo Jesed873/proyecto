@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\usuario;
 
 class UsuarioController extends Controller
 {
@@ -13,7 +14,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        return Usuario::get();
     }
 
     /**
@@ -23,7 +24,7 @@ class UsuarioController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
@@ -34,8 +35,16 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
+        $usuario = new Usuario;
+        
+        $usuario->Nombre = $request->nombre;
+
+        $usuario->Correo = $request->correo;
+
+        $usuario->Contrasena = $request->contrasena;
+        $usuario->Tipo = $request->tipo;
+        
+        $usuario->save();    }
 
     /**
      * Display the specified resource.
@@ -45,7 +54,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        //
+         return Usuario::where('id', $id)->get();
     }
 
     /**
@@ -68,7 +77,13 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return Usuario::where('id', $id)
+            ->update([
+                     'nombre'=> $request->nombre,
+                     'correo'=>$request->correo,
+                     'contrasena'=>$request->contrasena,
+                     'tipo'=>$request->tipo,
+                ]);
     }
 
     /**
@@ -79,6 +94,6 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Usuario::where('id', $id)->delete();
     }
 }
